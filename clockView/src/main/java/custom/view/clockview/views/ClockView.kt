@@ -22,6 +22,7 @@ class CustomClockView @JvmOverloads constructor (
     private val pathHourMarker = Path()
     private val pathMinMarker = Path()
     private val rectangle = Rect()
+    private var currentHours: Int = 0
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         shader = RadialGradient(
@@ -42,14 +43,21 @@ class CustomClockView @JvmOverloads constructor (
         style = Paint.Style.FILL
         color = Color.LTGRAY
     }
+
     private val paintHourMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         color = Color.DKGRAY
+    }
+    private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        style = Paint.Style.FILL
+        strokeCap = Paint.Cap.SQUARE
     }
 
     private fun setPaintSettings() {
         paintNumber.textSize = radiusNum * NUMBERS_SIZE
         paintCircle.strokeWidth = radius * CIRCLE_STROKE_WIDTH
+        paintHourArrow.strokeWidth = radiusNum * HOUR_ARROW_STROKE_WIDTH
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -71,6 +79,7 @@ class CustomClockView @JvmOverloads constructor (
         }
         canvas.drawPath(pathHourMarker, paintHourMarker)
         canvas.drawPath(pathMinMarker, paintMinMarker)
+        drawHourArrow(canvas, currentHours)
     }
 
     private fun calculate() {
@@ -110,6 +119,27 @@ class CustomClockView @JvmOverloads constructor (
         val x = (cordX + radius * cos(Math.toRadians(angle.toDouble())).toFloat())
         val y = (cordY + radius * sin(Math.toRadians(angle.toDouble())).toFloat())
         return Coordinates(x, y)
+    }
+
+    private fun drawHourArrow(canvas: Canvas, hours: Int) {
+        val angle = 360f / 12f * hours.toFloat() - 90f
+        val radius = radiusNum / 2f
+        val coordinates = calculateCoordinates(radius, angle)
+        canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintHourArrow)
+        drawHourArrowStart(canvas, angle, radius)
+    }
+
+    private fun drawHourArrowStart(canvas: Canvas, angle: Float, radius: Float) {
+        val startCoordinates = calculateCoordinates(0f, angle + 180f)
+        val endCoordinates = calculateCoordinates(
+            radius * HOUR_ARROW_LENGTH, angle + 180f)
+        canvas.drawLine(
+            startCoordinates.x,
+            startCoordinates.y,
+            endCoordinates.x,
+            endCoordinates.y,
+            paintHourArrow
+        )
     }
 }
 
