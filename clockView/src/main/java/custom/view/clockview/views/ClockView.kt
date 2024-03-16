@@ -2,9 +2,12 @@ package custom.view.clockview.views
 
 import android.content.Context
 import android.graphics.*
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import custom.view.clockview.utils.*
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -25,6 +28,19 @@ class CustomClockView @JvmOverloads constructor (
     private var currentHours: Int = 11
     private var currentMinutes: Int = 5
     private var currentSeconds: Int = 30
+    private val handler = Handler(Looper.getMainLooper())
+
+    init {
+        updateCurrentTime(Calendar.getInstance())
+        val updateTimeRunnable = object : Runnable {
+            override fun run() {
+                updateCurrentTime(Calendar.getInstance())
+                invalidate()
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.postDelayed(updateTimeRunnable, 1000)
+    }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         shader = RadialGradient(
@@ -76,6 +92,12 @@ class CustomClockView @JvmOverloads constructor (
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
+    private fun updateCurrentTime(time: Calendar) {
+        currentSeconds = time.get(Calendar.SECOND)
+        currentMinutes = time.get(Calendar.MINUTE)
+        currentHours = time.get(Calendar.HOUR)
+    }
+
 
     private fun setPaintSettings() {
         paintNumber.textSize = radiusNum * NUMBERS_SIZE
