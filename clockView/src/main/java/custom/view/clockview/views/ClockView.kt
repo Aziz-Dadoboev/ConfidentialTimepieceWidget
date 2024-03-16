@@ -130,7 +130,7 @@ class CustomClockView @JvmOverloads constructor (
         }
         canvas.drawPath(pathHourMarker, paintHourMarker)
         canvas.drawPath(pathMinMarker, paintMinMarker)
-        drawHourArrow(canvas, currentHours)
+        drawHourArrow(canvas, currentHours, currentMinutes)
         drawMinuteArrow(canvas, currentMinutes)
         drawSecondArrow(canvas, currentSeconds)
     }
@@ -174,8 +174,8 @@ class CustomClockView @JvmOverloads constructor (
         return Coordinates(x, y)
     }
 
-    private fun drawHourArrow(canvas: Canvas, hours: Int) {
-        val angle = 360f / 12f * hours.toFloat() - 90f
+    private fun drawHourArrow(canvas: Canvas, hours: Int, minutes: Int) {
+        val angle = 360f / 12f * hours.toFloat() - 90f + minutes / 2f
         val radius = radiusNum / 2f
         val coordinates = calculateCoordinates(radius, angle)
         canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintHourArrow)
@@ -197,7 +197,7 @@ class CustomClockView @JvmOverloads constructor (
 
     private fun drawMinuteArrow(canvas: Canvas, minutes: Int) {
         val angle = 360f / 60f * minutes.toFloat() - 90f
-        val coordinates = calculateCoordinates((radiusNum / 1.15f), angle)
+        val coordinates = calculateCoordinates(radiusNum - radiusNum * MINUTE_ARROW_LENGTH, angle)
         canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintMinArrow)
         drawMinuteArrowStart(canvas, minutes)
     }
