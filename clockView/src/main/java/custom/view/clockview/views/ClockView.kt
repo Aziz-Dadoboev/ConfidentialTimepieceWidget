@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
+import custom.view.clockview.R
 import custom.view.clockview.utils.*
 import java.util.*
 import kotlin.math.cos
@@ -55,6 +57,7 @@ class CustomClockView @JvmOverloads constructor (
         strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
         color = Color.DKGRAY
         style = Paint.Style.FILL
+        typeface = ResourcesCompat.getFont(context, R.font.sansserifflf)
     }
 
     private val paintMinMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
