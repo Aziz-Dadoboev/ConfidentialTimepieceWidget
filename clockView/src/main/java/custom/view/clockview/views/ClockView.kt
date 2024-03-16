@@ -23,6 +23,7 @@ class CustomClockView @JvmOverloads constructor (
     private val pathMinMarker = Path()
     private val rectangle = Rect()
     private var currentHours: Int = 0
+    private var currentMinutes: Int = 0
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         shader = RadialGradient(
@@ -48,7 +49,14 @@ class CustomClockView @JvmOverloads constructor (
         style = Paint.Style.FILL
         color = Color.DKGRAY
     }
+
     private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = Color.BLACK
+        style = Paint.Style.FILL
+        strokeCap = Paint.Cap.SQUARE
+    }
+
+    private val paintMinArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.BLACK
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
@@ -58,6 +66,7 @@ class CustomClockView @JvmOverloads constructor (
         paintNumber.textSize = radiusNum * NUMBERS_SIZE
         paintCircle.strokeWidth = radius * CIRCLE_STROKE_WIDTH
         paintHourArrow.strokeWidth = radiusNum * HOUR_ARROW_STROKE_WIDTH
+        paintMinArrow.strokeWidth = radiusNum * MINUTE_ARROW_STROKE_WIDTH
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -80,6 +89,7 @@ class CustomClockView @JvmOverloads constructor (
         canvas.drawPath(pathHourMarker, paintHourMarker)
         canvas.drawPath(pathMinMarker, paintMinMarker)
         drawHourArrow(canvas, currentHours)
+        drawMinuteArrow(canvas, currentMinutes)
     }
 
     private fun calculate() {
@@ -139,6 +149,29 @@ class CustomClockView @JvmOverloads constructor (
             endCoordinates.x,
             endCoordinates.y,
             paintHourArrow
+        )
+    }
+
+    private fun drawMinuteArrow(canvas: Canvas, minutes: Int) {
+        val angle = 360f / 60f * minutes.toFloat() - 90f
+        val coordinates = calculateCoordinates((radiusNum / 1.15f), angle)
+        canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintMinArrow)
+        drawMinuteArrowBack(canvas, minutes)
+    }
+
+    private fun drawMinuteArrowBack(canvas: Canvas, minutes: Int) {
+        val startAngle = 360f / 60f * minutes.toFloat() - 90f
+        val endAngle = ((startAngle + 180f) % 360f)
+        val endCoordinates = calculateCoordinates(
+            radiusNum * MINUTE_ARROW_LENGTH, startAngle)
+        val startCoordinates = calculateCoordinates(
+            radiusNum * MINUTE_ARROW_LENGTH, endAngle)
+        canvas.drawLine(
+            startCoordinates.x,
+            startCoordinates.y,
+            endCoordinates.x,
+            endCoordinates.y,
+            paintMinArrow
         )
     }
 }
