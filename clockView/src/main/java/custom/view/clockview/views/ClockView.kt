@@ -33,7 +33,7 @@ class CustomClockView @JvmOverloads constructor (
     }
 
     private val paintNumber = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        strokeWidth = 1f.dpToPx()
+        strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
         color = Color.DKGRAY
         style = Paint.Style.FILL
     }
