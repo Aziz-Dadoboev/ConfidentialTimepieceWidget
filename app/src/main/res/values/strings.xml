@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CustomClockView</string>
+    <string name="dynamicView">Программно</string>
+    <string name="xmlView">XML</string>
 </resources>
