@@ -1,11 +1,11 @@
 package custom.view
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatActivity
 import custom.view.clockview.views.CustomClockView
 
 class MainActivity : AppCompatActivity() {
@@ -40,5 +40,27 @@ class MainActivity : AppCompatActivity() {
         customClockView.visibility = View.INVISIBLE
         parentLayout.addView(customClockView)
         return customClockView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_item, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                openSettingsDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openSettingsDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.settings_dialog)
+        dialog.show()
     }
 }

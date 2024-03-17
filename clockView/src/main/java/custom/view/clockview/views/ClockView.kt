@@ -25,7 +25,7 @@ class CustomClockView @JvmOverloads constructor (
     private val pathHourMarker = Path()
     private val pathMinMarker = Path()
     private val rectangle = Rect()
-    private var backgroundColor: Int = Color.WHITE
+    private var backgroundColor: Int = Color.rgb(239, 239, 239)
     private var hoursArrowColor: Int = Color.BLACK
     private var minutesArrowColor: Int = Color.BLACK
     private var secondsArrowColor: Int = Color.BLACK
