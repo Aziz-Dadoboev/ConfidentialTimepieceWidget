@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="settings_text_size">48sp</dimen>
+    <dimen name="settings_layout_padding">16dp</dimen>
+    <dimen name="settings_layout_margin">10dp</dimen>
+    <dimen name="colors_layout_margin_start">30dp</dimen>
+    <dimen name="sizes_settings_text_size">18sp</dimen>
+    <dimen name="change_radius_text_size">24sp</dimen>
+    <dimen name="change_color_text_size">20sp</dimen>
+    <dimen name="change_button_text_size">10sp</dimen>
+</resources>
