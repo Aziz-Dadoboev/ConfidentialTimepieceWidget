@@ -20,18 +20,11 @@ class CustomClockView @JvmOverloads constructor (
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private var cordX = 0f
-    private var cordY = 0f
-    private var radius = 0f
-    private var radiusNum = 0f
+    private val handler = Handler(Looper.getMainLooper())
     private val numberPosMap = hashMapOf<String, Coordinates>()
     private val pathHourMarker = Path()
     private val pathMinMarker = Path()
     private val rectangle = Rect()
-    private var currentHours: Int = 11
-    private var currentMinutes: Int = 5
-    private var currentSeconds: Int = 30
-    private val handler = Handler(Looper.getMainLooper())
     private var backgroundColor: Int = Color.WHITE
     private var hoursArrowColor: Int = Color.BLACK
     private var minutesArrowColor: Int = Color.BLACK
@@ -39,6 +32,13 @@ class CustomClockView @JvmOverloads constructor (
     private var numbersColor: Int = Color.DKGRAY
     private var hourMarkersColor: Int = Color.DKGRAY
     private var minutesMarkersColor: Int = Color.LTGRAY
+    private var cordX = 0f
+    private var cordY = 0f
+    private var radius = 0f
+    private var radiusNum = 0f
+    private var currentHours: Int = 0
+    private var currentMinutes: Int = 0
+    private var currentSeconds: Int = 0
 
     init {
         updateCurrentTime(Calendar.getInstance())
