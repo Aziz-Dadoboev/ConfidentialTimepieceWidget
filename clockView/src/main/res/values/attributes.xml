@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomClockView">
+        <attr name="clockBackgroundColor" format="color"/>
+        <attr name="hoursArrowColor" format="color"/>
+        <attr name="minutesArrowColor" format="color"/>
+        <attr name="secondsArrowColor" format="color"/>
+        <attr name="numbersColor" format="color"/>
+        <attr name="hourMarkersColor" format="color"/>
+        <attr name="minutesMarkersColor" format="color"/>
+    </declare-styleable>
+</resources>

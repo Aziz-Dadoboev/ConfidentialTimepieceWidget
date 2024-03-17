@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.withStyledAttributes
 import custom.view.clockview.R
 import custom.view.clockview.utils.*
 import java.util.*
@@ -31,6 +32,13 @@ class CustomClockView @JvmOverloads constructor (
     private var currentMinutes: Int = 5
     private var currentSeconds: Int = 30
     private val handler = Handler(Looper.getMainLooper())
+    private var backgroundColor: Int = Color.WHITE
+    private var hoursArrowColor: Int = Color.BLACK
+    private var minutesArrowColor: Int = Color.BLACK
+    private var secondsArrowColor: Int = Color.BLACK
+    private var numbersColor: Int = Color.DKGRAY
+    private var hourMarkersColor: Int = Color.DKGRAY
+    private var minutesMarkersColor: Int = Color.LTGRAY
 
     init {
         updateCurrentTime(Calendar.getInstance())
@@ -42,6 +50,22 @@ class CustomClockView @JvmOverloads constructor (
             }
         }
         handler.postDelayed(updateTimeRunnable, 1000)
+        context.withStyledAttributes(attrs, R.styleable.CustomClockView) {
+            backgroundColor = getColor(
+                R.styleable.CustomClockView_clockBackgroundColor, Color.WHITE)
+            hoursArrowColor = getColor(
+                R.styleable.CustomClockView_hoursArrowColor, Color.BLACK)
+            minutesArrowColor = getColor(
+                R.styleable.CustomClockView_minutesArrowColor, Color.BLACK)
+            secondsArrowColor = getColor(
+                R.styleable.CustomClockView_secondsArrowColor, Color.BLACK)
+            numbersColor = getColor(
+                R.styleable.CustomClockView_numbersColor, Color.DKGRAY)
+            hourMarkersColor = getColor(
+                R.styleable.CustomClockView_hourMarkersColor, Color.DKGRAY)
+            minutesMarkersColor  = getColor(
+                R.styleable.CustomClockView_minutesMarkersColor, Color.LTGRAY)
+        }
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -53,44 +77,49 @@ class CustomClockView @JvmOverloads constructor (
         style = Paint.Style.STROKE
     }
 
+    private val paintCircleBackground = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = backgroundColor
+        style = Paint.Style.FILL
+    }
+
     private val paintNumber = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
-        color = Color.DKGRAY
+        color = numbersColor
         style = Paint.Style.FILL
         typeface = ResourcesCompat.getFont(context, R.font.sansserifflf)
     }
 
     private val paintMinMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.LTGRAY
+        color = minutesMarkersColor
     }
 
     private val paintHourMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.DKGRAY
+        color = hourMarkersColor
     }
 
     private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = hoursArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintMinArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = minutesArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintSecondArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = secondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
 
     private val paintSecondArrowStart = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+        color = secondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
@@ -124,6 +153,7 @@ class CustomClockView @JvmOverloads constructor (
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        canvas.drawCircle(cordX, cordY, radius, paintCircleBackground)
         canvas.drawCircle(cordX, cordY, radius, paintCircle)
         numberPosMap.forEach { (number, coordinate) ->
             canvas.drawText(number, coordinate.x, coordinate.y, paintNumber )
