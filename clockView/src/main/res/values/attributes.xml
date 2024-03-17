@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="CustomClockView">
         <attr name="clockBackgroundColor" format="color"/>
+        <attr name="clockCircleColor" format="color"/>
         <attr name="hoursArrowColor" format="color"/>
         <attr name="minutesArrowColor" format="color"/>
         <attr name="secondsArrowColor" format="color"/>

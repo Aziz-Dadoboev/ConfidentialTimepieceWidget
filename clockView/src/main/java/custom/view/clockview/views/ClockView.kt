@@ -26,6 +26,7 @@ class CustomClockView @JvmOverloads constructor (
     private val pathMinMarker = Path()
     private val rectangle = Rect()
     private var backgroundColor: Int = Color.WHITE
+    private var circleColor: Int = Color.BLACK
     private var hoursArrowColor: Int = Color.BLACK
     private var minutesArrowColor: Int = Color.BLACK
     private var secondsArrowColor: Int = Color.BLACK
@@ -53,6 +54,8 @@ class CustomClockView @JvmOverloads constructor (
         context.withStyledAttributes(attrs, R.styleable.CustomClockView) {
             backgroundColor = getColor(
                 R.styleable.CustomClockView_clockBackgroundColor, Color.WHITE)
+            circleColor = getColor(
+                R.styleable.CustomClockView_clockCircleColor, Color.BLACK)
             hoursArrowColor = getColor(
                 R.styleable.CustomClockView_hoursArrowColor, Color.BLACK)
             minutesArrowColor = getColor(
@@ -69,11 +72,7 @@ class CustomClockView @JvmOverloads constructor (
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        shader = RadialGradient(
-            0f, 0f, 100f,
-            Color.BLACK, Color.rgb(47, 39, 39),
-            Shader.TileMode.CLAMP
-        )
+        color = circleColor
         style = Paint.Style.STROKE
     }
 
@@ -270,7 +269,6 @@ class CustomClockView @JvmOverloads constructor (
             paintSecondArrowStart
         )
     }
-
 }
 
 private data class Coordinates(
