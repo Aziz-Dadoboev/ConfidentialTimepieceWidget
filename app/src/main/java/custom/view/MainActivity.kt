@@ -119,5 +119,7 @@ class MainActivity : AppCompatActivity() {
         // Markers
         dynamicClockView.hourMarkersColor = clockView.hourMarkersColor
         dynamicClockView.minutesMarkersColor = clockView.minutesMarkersColor
+        // Center
+        dynamicClockView.circleCenterColor = Color.RED
     }
 }
