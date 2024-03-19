@@ -11,6 +11,8 @@
         android:id="@+id/clockView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:clockBackgroundColor="#EFEFEF"
+        app:circleCenterColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/radioGroup"
         app:layout_constraintStart_toStartOf="parent"
