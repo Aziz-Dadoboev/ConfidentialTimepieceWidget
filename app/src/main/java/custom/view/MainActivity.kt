@@ -21,20 +21,7 @@ class MainActivity : AppCompatActivity() {
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         val clockView = findViewById<CustomClockView>(R.id.clockView)
 
-        // using setters & getters
-        dynamicClockView.setCircleColor(clockView.getCircleColor())
-        dynamicClockView.setClockBackgroundColor(clockView.getClockBackgroundColor())
-        clockView.setClockBackgroundColor(Color.rgb(250, 247, 237))
-        dynamicClockView.setHoursArrowColor(clockView.getHoursArrowColor())
-        dynamicClockView.setMinutesArrowColor(clockView.getMinutesArrowColor())
-        val oldSecondsArrowColor = clockView.getSecondsArrowColor()
-        clockView.setSecondsArrowColor(Color.rgb(255, 0, 0))
-        dynamicClockView.setSecondsArrowColor(clockView.getSecondsArrowColor())
-        clockView.setSecondsArrowColor(oldSecondsArrowColor)
-        dynamicClockView.setNumbersColor(clockView.getNumbersColor())
-        dynamicClockView.setHourMarkersColor(clockView.getHourMarkersColor())
-        dynamicClockView.setMinutesMarkersColor(clockView.getMinutesMarkersColor())
-
+        setAttributes(clockView, dynamicClockView)
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
             if (radio == findViewById<RadioButton>(R.id.dynamicButton)) {
@@ -109,5 +96,28 @@ class MainActivity : AppCompatActivity() {
 
         constraintSet.applyTo(parentLayout)
         return customClockView
+    }
+
+    private fun setAttributes(clockView: CustomClockView, dynamicClockView: CustomClockView) {
+        // using setters & getters
+        // Circle
+        dynamicClockView.setCircleColor(clockView.getCircleColor())
+        // Clock Background
+        dynamicClockView.setClockBackgroundColor(clockView.getClockBackgroundColor())
+        clockView.setClockBackgroundColor(Color.rgb(250, 247, 237))
+        // Hours Arrow
+        dynamicClockView.setHoursArrowColor(clockView.getHoursArrowColor())
+        // Minutes Arrow
+        dynamicClockView.setMinutesArrowColor(clockView.getMinutesArrowColor())
+        // Seconds Arrow
+        val oldSecondsArrowColor = clockView.getSecondsArrowColor()
+        clockView.setSecondsArrowColor(Color.rgb(255, 0, 0))
+        dynamicClockView.setSecondsArrowColor(clockView.getSecondsArrowColor())
+        clockView.setSecondsArrowColor(oldSecondsArrowColor)
+        // Numbers
+        dynamicClockView.setNumbersColor(clockView.getNumbersColor())
+        // Markers
+        dynamicClockView.setHourMarkersColor(clockView.getHourMarkersColor())
+        dynamicClockView.setMinutesMarkersColor(clockView.getMinutesMarkersColor())
     }
 }
