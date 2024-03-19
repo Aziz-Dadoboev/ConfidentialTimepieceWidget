@@ -69,7 +69,7 @@ class CustomClockView @JvmOverloads constructor (
             mMinutesMarkersColor = getColor(
                 R.styleable.CustomClockView_minutesMarkersColor, Color.LTGRAY)
             mCircleCenterColor = getColor(
-                R.styleable.CustomClockView_clockCircleColor, Color.WHITE)
+                R.styleable.CustomClockView_circleCenterColor, Color.WHITE)
         }
     }
 
