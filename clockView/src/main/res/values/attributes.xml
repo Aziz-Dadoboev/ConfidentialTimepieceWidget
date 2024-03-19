@@ -9,5 +9,6 @@
         <attr name="numbersColor" format="color"/>
         <attr name="hourMarkersColor" format="color"/>
         <attr name="minutesMarkersColor" format="color"/>
+        <attr name="circleCenterColor" format="color"/>
     </declare-styleable>
 </resources>

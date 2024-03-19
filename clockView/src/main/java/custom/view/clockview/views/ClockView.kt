@@ -33,6 +33,7 @@ class CustomClockView @JvmOverloads constructor (
     private var mNumbersColor = 0
     private var mHourMarkersColor = 0
     private var mMinutesMarkersColor = 0
+    private var mCircleCenterColor = 0
     private var mCordX: Float = 0f
     private var mCordY: Float = 0f
     private var mRadius: Float = 0f
@@ -66,14 +67,20 @@ class CustomClockView @JvmOverloads constructor (
                 R.styleable.CustomClockView_numbersColor, Color.DKGRAY)
             mHourMarkersColor = getColor(
                 R.styleable.CustomClockView_hourMarkersColor, Color.DKGRAY)
-            mMinutesMarkersColor  = getColor(
+            mMinutesMarkersColor = getColor(
                 R.styleable.CustomClockView_minutesMarkersColor, Color.LTGRAY)
+            mCircleCenterColor = getColor(
+                R.styleable.CustomClockView_clockCircleColor, Color.WHITE)
         }
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
 //        color = mCircleColor
         style = Paint.Style.STROKE
+    }
+
+    private val paintCenter = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
     }
 
     private val paintCircleBackground = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -148,6 +155,7 @@ class CustomClockView @JvmOverloads constructor (
         paintMinArrow.color = mMinutesArrowColor
         paintSecondArrow.color = mSecondsArrowColor
         paintSecondArrowStart.color = mSecondsArrowColor
+        paintCenter.color = mCircleCenterColor
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -162,6 +170,7 @@ class CustomClockView @JvmOverloads constructor (
         drawHourArrow(canvas, mCurrentHours, mCurrentMinutes)
         drawMinuteArrow(canvas, mCurrentMinutes)
         drawSecondArrow(canvas, mCurrentSeconds)
+        canvas.drawCircle(mCordX, mCordY, mRadius * CIRCLE_CENTER_RADIUS, paintCenter)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
