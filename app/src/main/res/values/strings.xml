@@ -2,16 +2,4 @@
     <string name="app_name">CustomClockView</string>
     <string name="dynamicView">Программно</string>
     <string name="xmlView">XML</string>
-    <string name="settings">Настройки</string>
-    <string name="radius_setting_text">Радиус</string>
-    <string name="sizes_settings_text">Размер:</string>
-    <string name="colors_setting_text">Цвета:</string>
-    <string name="change_bgcolor_text">Фон</string>
-    <string name="change_hcolor_text">Часы</string>
-    <string name="change_mcolor_text">Минуты</string>
-    <string name="change_scolor_text">Секунды</string>
-    <string name="change_ncolor_text">Номера</string>
-    <string name="change_marker_hcolor_text">Деления часов</string>
-    <string name="change_marker_mcolor_text">Деления минут</string>
-    <string name="choose_color_button">Выбрать цвет</string>
 </resources>
