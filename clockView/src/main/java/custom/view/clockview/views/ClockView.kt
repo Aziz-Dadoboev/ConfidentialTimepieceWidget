@@ -2,8 +2,7 @@ package custom.view.clockview.views
 
 import android.content.Context
 import android.graphics.*
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
@@ -75,7 +74,6 @@ class CustomClockView @JvmOverloads constructor (
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mCircleColor
         style = Paint.Style.STROKE
     }
 
@@ -84,48 +82,40 @@ class CustomClockView @JvmOverloads constructor (
     }
 
     private val paintCircleBackground = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mBackgroundColor
         style = Paint.Style.FILL
     }
 
     private val paintNumber = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
-//        color = mNumbersColor
         style = Paint.Style.FILL
         typeface = ResourcesCompat.getFont(context, R.font.sansserifflf)
     }
 
     private val paintMinMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-//        color = mMinutesMarkersColor
     }
 
     private val paintHourMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-//        color = mHourMarkersColor
     }
 
     private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mHoursArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintMinArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mMinutesArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintSecondArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
 
     private val paintSecondArrowStart = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-//        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
@@ -182,6 +172,44 @@ class CustomClockView @JvmOverloads constructor (
         mRadiusNum = mRadius - (mRadius * NUMBERS_SHIFT)
         setPaintSettings()
         calculate()
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return Bundle().apply {
+            putInt("mBackgroundColor", mBackgroundColor)
+            putInt("mCircleColor", mCircleColor)
+            putInt("mHoursArrowColor", mHoursArrowColor)
+            putInt("mMinutesArrowColor", mMinutesArrowColor)
+            putInt("mSecondsArrowColor", mSecondsArrowColor)
+            putInt("mNumbersColor", mNumbersColor)
+            putInt("mHourMarkersColor", mHourMarkersColor)
+            putInt("mMinutesMarkersColor", mMinutesMarkersColor)
+            putInt("mCircleCenterColor", mCircleCenterColor)
+            putParcelable("superState", super.onSaveInstanceState())
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        var superState: Parcelable? = null
+        if (state is Bundle) {
+            mBackgroundColor = state.getInt("mBackgroundColor")
+            mCircleColor = state.getInt("mCircleColor")
+            mHoursArrowColor = state.getInt("mHoursArrowColor")
+            mMinutesArrowColor = state.getInt("mMinutesArrowColor")
+            mSecondsArrowColor = state.getInt("mSecondsArrowColor")
+            mNumbersColor = state.getInt("mNumbersColor")
+            mHourMarkersColor = state.getInt("mHourMarkersColor")
+            mMinutesMarkersColor = state.getInt("mMinutesMarkersColor")
+            mCircleCenterColor = state.getInt("mCircleCenterColor")
+            mMinutesMarkersColor = state.getInt("mMinutesMarkersColor")
+            superState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                state.getParcelable("superState", Parcelable::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                state.getParcelable("superState")
+            }
+        }
+        super.onRestoreInstanceState(superState)
     }
 
     private fun calculate() {
