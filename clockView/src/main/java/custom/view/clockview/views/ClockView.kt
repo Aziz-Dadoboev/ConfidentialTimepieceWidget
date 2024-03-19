@@ -20,26 +20,26 @@ class CustomClockView @JvmOverloads constructor (
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val numberPosMap = hashMapOf<String, Coordinates>()
-    private val pathHourMarker = Path()
-    private val pathMinMarker = Path()
-    private val rectangle = Rect()
-    private var backgroundColor: Int = Color.WHITE
-    private var circleColor: Int = Color.BLACK
-    private var hoursArrowColor: Int = Color.BLACK
-    private var minutesArrowColor: Int = Color.BLACK
-    private var secondsArrowColor: Int = Color.BLACK
-    private var numbersColor: Int = Color.DKGRAY
-    private var hourMarkersColor: Int = Color.DKGRAY
-    private var minutesMarkersColor: Int = Color.LTGRAY
-    private var cordX = 0f
-    private var cordY = 0f
-    private var radius = 0f
-    private var radiusNum = 0f
-    private var currentHours: Int = 0
-    private var currentMinutes: Int = 0
-    private var currentSeconds: Int = 0
+    private val mHandler = Handler(Looper.getMainLooper())
+    private val mNumberPosMap = hashMapOf<String, Coordinates>()
+    private val mPathHourMarker = Path()
+    private val mPathMinMarker = Path()
+    private val mRectangle = Rect()
+    private var mBackgroundColor = 0
+    private var mCircleColor = 0
+    private var mHoursArrowColor = 0
+    private var mMinutesArrowColor = 0
+    private var mSecondsArrowColor = 0
+    private var mNumbersColor = 0
+    private var mHourMarkersColor = 0
+    private var mMinutesMarkersColor = 0
+    private var mCordX: Float = 0f
+    private var mCordY: Float = 0f
+    private var mRadius: Float = 0f
+    private var mRadiusNum: Float = 0f
+    private var mCurrentHours: Int = 0
+    private var mCurrentMinutes: Int = 0
+    private var mCurrentSeconds: Int = 0
 
     init {
         updateCurrentTime(Calendar.getInstance())
@@ -47,129 +47,129 @@ class CustomClockView @JvmOverloads constructor (
             override fun run() {
                 updateCurrentTime(Calendar.getInstance())
                 invalidate()
-                handler.postDelayed(this, 1000)
+                mHandler.postDelayed(this, 1000)
             }
         }
-        handler.postDelayed(updateTimeRunnable, 1000)
+        mHandler.postDelayed(updateTimeRunnable, 1000)
         context.withStyledAttributes(attrs, R.styleable.CustomClockView) {
-            backgroundColor = getColor(
+            mBackgroundColor = getColor(
                 R.styleable.CustomClockView_clockBackgroundColor, Color.WHITE)
-            circleColor = getColor(
+            mCircleColor = getColor(
                 R.styleable.CustomClockView_clockCircleColor, Color.BLACK)
-            hoursArrowColor = getColor(
+            mHoursArrowColor = getColor(
                 R.styleable.CustomClockView_hoursArrowColor, Color.BLACK)
-            minutesArrowColor = getColor(
+            mMinutesArrowColor = getColor(
                 R.styleable.CustomClockView_minutesArrowColor, Color.BLACK)
-            secondsArrowColor = getColor(
+            mSecondsArrowColor = getColor(
                 R.styleable.CustomClockView_secondsArrowColor, Color.BLACK)
-            numbersColor = getColor(
+            mNumbersColor = getColor(
                 R.styleable.CustomClockView_numbersColor, Color.DKGRAY)
-            hourMarkersColor = getColor(
+            mHourMarkersColor = getColor(
                 R.styleable.CustomClockView_hourMarkersColor, Color.DKGRAY)
-            minutesMarkersColor  = getColor(
+            mMinutesMarkersColor  = getColor(
                 R.styleable.CustomClockView_minutesMarkersColor, Color.LTGRAY)
         }
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = circleColor
+        color = mCircleColor
         style = Paint.Style.STROKE
     }
 
     private val paintCircleBackground = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = backgroundColor
+        color = mBackgroundColor
         style = Paint.Style.FILL
     }
 
     private val paintNumber = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
-        color = numbersColor
+        color = mNumbersColor
         style = Paint.Style.FILL
         typeface = ResourcesCompat.getFont(context, R.font.sansserifflf)
     }
 
     private val paintMinMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = minutesMarkersColor
+        color = mMinutesMarkersColor
     }
 
     private val paintHourMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = hourMarkersColor
+        color = mHourMarkersColor
     }
 
     private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = hoursArrowColor
+        color = mHoursArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintMinArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = minutesArrowColor
+        color = mMinutesArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintSecondArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = secondsArrowColor
+        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
 
     private val paintSecondArrowStart = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = secondsArrowColor
+        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
     private fun updateCurrentTime(time: Calendar) {
-        currentSeconds = time.get(Calendar.SECOND)
-        currentMinutes = time.get(Calendar.MINUTE)
-        currentHours = time.get(Calendar.HOUR)
+        mCurrentSeconds = time.get(Calendar.SECOND)
+        mCurrentMinutes = time.get(Calendar.MINUTE)
+        mCurrentHours = time.get(Calendar.HOUR)
     }
 
 
     private fun setPaintSettings() {
-        paintNumber.textSize = radiusNum * NUMBERS_SIZE
-        paintCircle.strokeWidth = radius * CIRCLE_STROKE_WIDTH
-        paintHourArrow.strokeWidth = radiusNum * HOUR_ARROW_STROKE_WIDTH
-        paintMinArrow.strokeWidth = radiusNum * MINUTE_ARROW_STROKE_WIDTH
-        paintSecondArrow.strokeWidth = radiusNum * SECOND_ARROW_STROKE_WIDTH
-        paintSecondArrowStart.strokeWidth = radiusNum * SECOND_ARROW_START_STROKE_WIDTH
-    }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        cordX = width / 2f
-        cordY = height / 2f
-        radius = (if (width > height) cordY else cordX)
-        radius -= radius * CIRCLE_PADDING
-        radiusNum = radius - (radius * NUMBERS_SHIFT)
-        setPaintSettings()
-        calculate()
+        paintNumber.textSize = mRadiusNum * NUMBERS_SIZE
+        paintCircle.strokeWidth = mRadius * CIRCLE_STROKE_WIDTH
+        paintHourArrow.strokeWidth = mRadiusNum * HOUR_ARROW_STROKE_WIDTH
+        paintMinArrow.strokeWidth = mRadiusNum * MINUTE_ARROW_STROKE_WIDTH
+        paintSecondArrow.strokeWidth = mRadiusNum * SECOND_ARROW_STROKE_WIDTH
+        paintSecondArrowStart.strokeWidth = mRadiusNum * SECOND_ARROW_START_STROKE_WIDTH
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawCircle(cordX, cordY, radius, paintCircleBackground)
-        canvas.drawCircle(cordX, cordY, radius, paintCircle)
-        numberPosMap.forEach { (number, coordinate) ->
+        canvas.drawCircle(mCordX, mCordY, mRadius, paintCircleBackground)
+        canvas.drawCircle(mCordX, mCordY, mRadius, paintCircle)
+        mNumberPosMap.forEach { (number, coordinate) ->
             canvas.drawText(number, coordinate.x, coordinate.y, paintNumber )
         }
-        canvas.drawPath(pathHourMarker, paintHourMarker)
-        canvas.drawPath(pathMinMarker, paintMinMarker)
-        drawHourArrow(canvas, currentHours, currentMinutes)
-        drawMinuteArrow(canvas, currentMinutes)
-        drawSecondArrow(canvas, currentSeconds)
+        canvas.drawPath(mPathHourMarker, paintHourMarker)
+        canvas.drawPath(mPathMinMarker, paintMinMarker)
+        drawHourArrow(canvas, mCurrentHours, mCurrentMinutes)
+        drawMinuteArrow(canvas, mCurrentMinutes)
+        drawSecondArrow(canvas, mCurrentSeconds)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        mCordX = width / 2f
+        mCordY = height / 2f
+        mRadius = (if (width > height) mCordY else mCordX)
+        mRadius -= mRadius * CIRCLE_PADDING
+        mRadiusNum = mRadius - (mRadius * NUMBERS_SHIFT)
+        setPaintSettings()
+        calculate()
     }
 
     private fun calculate() {
         var hour = 3
-        numberPosMap.clear()
+        mNumberPosMap.clear()
         for (angle in 0 until 360 step 6) {
-            val pointStart = calculateCoordinates(radius - (radius * MARKER_SHIFT), angle.toFloat())
-            val pointFinish = calculateCoordinates(radius, angle.toFloat())
+            val pointStart = calculateCoordinates(mRadius - (mRadius * MARKER_SHIFT), angle.toFloat())
+            val pointFinish = calculateCoordinates(mRadius, angle.toFloat())
             val pointCenterX = (pointStart.x + pointFinish.x) / 2
             val pointCenterY = (pointStart.y + pointFinish.y) / 2
             if (angle % 30 == 0) {
@@ -177,37 +177,37 @@ class CustomClockView @JvmOverloads constructor (
                     in 0..12 -> hour.toString()
                     else -> (hour - 12).toString()
                 }
-                paintNumber.getTextBounds(text, 0, text.length, rectangle)
-                val coordinates = calculateCoordinates(radiusNum, angle.toFloat())
-                pathHourMarker.addCircle(pointCenterX, pointCenterY,
-                    radius * HOURS_MARKER_RADIUS, Path.Direction.CW)
-                numberPosMap[text] = Coordinates(
+                paintNumber.getTextBounds(text, 0, text.length, mRectangle)
+                val coordinates = calculateCoordinates(mRadiusNum, angle.toFloat())
+                mPathHourMarker.addCircle(pointCenterX, pointCenterY,
+                    mRadius * HOURS_MARKER_RADIUS, Path.Direction.CW)
+                mNumberPosMap[text] = Coordinates(
                     x = coordinates.x - paintNumber.measureText(text) / 2f,
-                    y = coordinates.y + rectangle.height() / 2f
+                    y = coordinates.y + mRectangle.height() / 2f
                 )
 
                 hour++
             } else {
-                pathMinMarker.addCircle(
+                mPathMinMarker.addCircle(
                     pointCenterX,
                     pointCenterY,
-                    radius * MINUTES_MARKER_RADIUS,
+                    mRadius * MINUTES_MARKER_RADIUS,
                     Path.Direction.CW)
             }
         }
     }
 
     private fun calculateCoordinates(radius: Float, angle: Float): Coordinates {
-        val x = (cordX + radius * cos(Math.toRadians(angle.toDouble())).toFloat())
-        val y = (cordY + radius * sin(Math.toRadians(angle.toDouble())).toFloat())
+        val x = (mCordX + radius * cos(Math.toRadians(angle.toDouble())).toFloat())
+        val y = (mCordY + radius * sin(Math.toRadians(angle.toDouble())).toFloat())
         return Coordinates(x, y)
     }
 
     private fun drawHourArrow(canvas: Canvas, hours: Int, minutes: Int) {
         val angle = 360f / 12f * hours.toFloat() - 90f + minutes / 2f
-        val radius = radiusNum / 2f
+        val radius = mRadiusNum / 2f
         val coordinates = calculateCoordinates(radius, angle)
-        canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintHourArrow)
+        canvas.drawLine(mCordX, mCordY, coordinates.x, coordinates.y, paintHourArrow)
         drawHourArrowStart(canvas, angle, radius)
     }
 
@@ -226,8 +226,8 @@ class CustomClockView @JvmOverloads constructor (
 
     private fun drawMinuteArrow(canvas: Canvas, minutes: Int) {
         val angle = 360f / 60f * minutes.toFloat() - 90f
-        val coordinates = calculateCoordinates(radiusNum - radiusNum * MINUTE_ARROW_LENGTH, angle)
-        canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintMinArrow)
+        val coordinates = calculateCoordinates(mRadiusNum - mRadiusNum * MINUTE_ARROW_LENGTH, angle)
+        canvas.drawLine(mCordX, mCordY, coordinates.x, coordinates.y, paintMinArrow)
         drawMinuteArrowStart(canvas, minutes)
     }
 
@@ -235,9 +235,9 @@ class CustomClockView @JvmOverloads constructor (
         val startAngle = 360f / 60f * minutes.toFloat() - 90f
         val endAngle = ((startAngle + 180f) % 360f)
         val endCoordinates = calculateCoordinates(
-            radiusNum * MINUTE_ARROW_LENGTH, startAngle)
+            mRadiusNum * MINUTE_ARROW_LENGTH, startAngle)
         val startCoordinates = calculateCoordinates(
-            radiusNum * MINUTE_ARROW_LENGTH, endAngle)
+            mRadiusNum * MINUTE_ARROW_LENGTH, endAngle)
         canvas.drawLine(
             startCoordinates.x,
             startCoordinates.y,
@@ -249,8 +249,8 @@ class CustomClockView @JvmOverloads constructor (
 
     private fun drawSecondArrow(canvas: Canvas, seconds: Int) {
         val angle = 360f / 60f * seconds.toFloat() - 90f
-        val coordinates = calculateCoordinates(radiusNum, angle)
-        canvas.drawLine(cordX, cordY, coordinates.x, coordinates.y, paintSecondArrow)
+        val coordinates = calculateCoordinates(mRadiusNum, angle)
+        canvas.drawLine(mCordX, mCordY, coordinates.x, coordinates.y, paintSecondArrow)
         drawSecondArrowStart(canvas, seconds)
     }
 
@@ -258,9 +258,9 @@ class CustomClockView @JvmOverloads constructor (
         val startAngle = 360f / 60f * seconds.toFloat() - 90f
         val endAngle = ((startAngle + 180f) % 360f)
         val endCoordinates = calculateCoordinates(
-            radiusNum * SECOND_ARROW_LENGTH_START, startAngle)
+            mRadiusNum * SECOND_ARROW_LENGTH_START, startAngle)
         val startCoordinates = calculateCoordinates(
-            radiusNum * SECOND_ARROW_LENGTH, endAngle)
+            mRadiusNum * SECOND_ARROW_LENGTH, endAngle)
         canvas.drawLine(
             startCoordinates.x,
             startCoordinates.y,
@@ -268,6 +268,70 @@ class CustomClockView @JvmOverloads constructor (
             endCoordinates.y,
             paintSecondArrowStart
         )
+    }
+
+    fun setClockBackgroundColor(newColor: Int) {
+        mBackgroundColor = newColor
+    }
+
+    fun getClockBackgroundColor(): Int {
+        return mBackgroundColor
+    }
+
+    fun setCircleColor(newColor: Int) {
+        mCircleColor = newColor
+    }
+
+    fun getCircleColor(): Int {
+        return mCircleColor
+    }
+
+    fun setHoursArrowColor(newColor: Int) {
+        mHoursArrowColor = newColor
+    }
+
+    fun getHoursArrowColor(): Int {
+        return mHoursArrowColor
+    }
+
+    fun setMinutesArrowColor(newColor: Int) {
+        mMinutesArrowColor = newColor
+    }
+
+    fun getMinutesArrowColor(): Int {
+        return mMinutesArrowColor
+    }
+
+    fun setSecondsArrowColor(newColor: Int) {
+        mSecondsArrowColor = newColor
+    }
+
+    fun getSecondsArrowColor(): Int {
+        return mSecondsArrowColor
+    }
+
+    fun setNumbersColor(newColor: Int) {
+        mNumbersColor = newColor
+    }
+
+    fun getNumbersColor(): Int {
+        return mNumbersColor
+    }
+
+    fun setHourMarkersColor(newColor: Int) {
+        mHourMarkersColor = newColor
+    }
+
+    fun getHourMarkersColor(): Int {
+        return mHourMarkersColor
+    }
+
+    fun setMinutesMarkersColor(newColor: Int) {
+        mMinutesMarkersColor = newColor
+    }
+
+    fun getMinutesMarkersColor(): Int {
+        return mMinutesMarkersColor
     }
 }
 
