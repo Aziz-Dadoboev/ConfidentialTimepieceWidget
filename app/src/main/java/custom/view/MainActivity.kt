@@ -101,23 +101,23 @@ class MainActivity : AppCompatActivity() {
     private fun setAttributes(clockView: CustomClockView, dynamicClockView: CustomClockView) {
         // using setters & getters
         // Circle
-        dynamicClockView.setCircleColor(clockView.getCircleColor())
+        dynamicClockView.circleColor = clockView.circleColor
         // Clock Background
-        dynamicClockView.setClockBackgroundColor(clockView.getClockBackgroundColor())
-        clockView.setClockBackgroundColor(Color.rgb(250, 247, 237))
+        dynamicClockView.clockBackgroundColor = clockView.clockBackgroundColor
+        clockView.clockBackgroundColor = Color.rgb(250, 247, 237)
         // Hours Arrow
-        dynamicClockView.setHoursArrowColor(clockView.getHoursArrowColor())
+        dynamicClockView.hoursArrowColor = clockView.hoursArrowColor
         // Minutes Arrow
-        dynamicClockView.setMinutesArrowColor(clockView.getMinutesArrowColor())
+        dynamicClockView.minutesArrowColor = clockView.minutesArrowColor
         // Seconds Arrow
-        val oldSecondsArrowColor = clockView.getSecondsArrowColor()
-        clockView.setSecondsArrowColor(Color.rgb(255, 0, 0))
-        dynamicClockView.setSecondsArrowColor(clockView.getSecondsArrowColor())
-        clockView.setSecondsArrowColor(oldSecondsArrowColor)
+        val oldSecondsArrowColor = clockView.secondsArrowColor
+        clockView.secondsArrowColor = Color.RED
+        dynamicClockView.secondsArrowColor = clockView.secondsArrowColor
+        clockView.secondsArrowColor = oldSecondsArrowColor
         // Numbers
-        dynamicClockView.setNumbersColor(clockView.getNumbersColor())
+        dynamicClockView.numbersColor = clockView.numbersColor
         // Markers
-        dynamicClockView.setHourMarkersColor(clockView.getHourMarkersColor())
-        dynamicClockView.setMinutesMarkersColor(clockView.getMinutesMarkersColor())
+        dynamicClockView.hourMarkersColor = clockView.hourMarkersColor
+        dynamicClockView.minutesMarkersColor = clockView.minutesMarkersColor
     }
 }

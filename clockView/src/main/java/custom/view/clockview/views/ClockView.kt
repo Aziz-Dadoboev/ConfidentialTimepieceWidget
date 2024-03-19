@@ -24,15 +24,33 @@ class CustomClockView @JvmOverloads constructor (
     private val mPathHourMarker = Path()
     private val mPathMinMarker = Path()
     private val mRectangle = Rect()
-    private var mBackgroundColor = 0
-    private var mCircleColor = 0
-    private var mHoursArrowColor = 0
-    private var mMinutesArrowColor = 0
-    private var mSecondsArrowColor = 0
-    private var mNumbersColor = 0
-    private var mHourMarkersColor = 0
-    private var mMinutesMarkersColor = 0
-    private var mCircleCenterColor = 0
+    var clockBackgroundColor = 0
+        get() = field
+        set(value) { field = value }
+    var circleColor = 0
+        get() = field
+        set(value) { field = value }
+    var hoursArrowColor = 0
+        get() = field
+        set(value) { field = value }
+    var minutesArrowColor = 0
+        get() = field
+        set(value) { field = value }
+    var secondsArrowColor = 0
+        get() = field
+        set(value) { field = value }
+    var numbersColor = 0
+        get() = field
+        set(value) { field = value }
+    var hourMarkersColor = 0
+        get() = field
+        set(value) { field = value }
+    var minutesMarkersColor = 0
+        get() = field
+        set(value) { field = value }
+    var circleCenterColor = 0
+        get() = field
+        set(value) { field = value }
     private var mCordX: Float = 0f
     private var mCordY: Float = 0f
     private var mRadius: Float = 0f
@@ -52,23 +70,23 @@ class CustomClockView @JvmOverloads constructor (
         }
         mHandler.postDelayed(updateTimeRunnable, 1000)
         context.withStyledAttributes(attrs, R.styleable.CustomClockView) {
-            mBackgroundColor = getColor(
+            clockBackgroundColor = getColor(
                 R.styleable.CustomClockView_clockBackgroundColor, Color.WHITE)
-            mCircleColor = getColor(
+            circleColor = getColor(
                 R.styleable.CustomClockView_clockCircleColor, Color.BLACK)
-            mHoursArrowColor = getColor(
+            hoursArrowColor = getColor(
                 R.styleable.CustomClockView_hoursArrowColor, Color.BLACK)
-            mMinutesArrowColor = getColor(
+            minutesArrowColor = getColor(
                 R.styleable.CustomClockView_minutesArrowColor, Color.BLACK)
-            mSecondsArrowColor = getColor(
+            secondsArrowColor = getColor(
                 R.styleable.CustomClockView_secondsArrowColor, Color.BLACK)
-            mNumbersColor = getColor(
+            numbersColor = getColor(
                 R.styleable.CustomClockView_numbersColor, Color.DKGRAY)
-            mHourMarkersColor = getColor(
+            hourMarkersColor = getColor(
                 R.styleable.CustomClockView_hourMarkersColor, Color.DKGRAY)
-            mMinutesMarkersColor = getColor(
+            minutesMarkersColor = getColor(
                 R.styleable.CustomClockView_minutesMarkersColor, Color.LTGRAY)
-            mCircleCenterColor = getColor(
+            circleCenterColor = getColor(
                 R.styleable.CustomClockView_circleCenterColor, Color.WHITE)
         }
     }
@@ -136,16 +154,16 @@ class CustomClockView @JvmOverloads constructor (
         paintSecondArrow.strokeWidth = mRadiusNum * SECOND_ARROW_STROKE_WIDTH
         paintSecondArrowStart.strokeWidth = mRadiusNum * SECOND_ARROW_START_STROKE_WIDTH
         // set colors
-        paintCircle.color = mCircleColor
-        paintCircleBackground.color = mBackgroundColor
-        paintNumber.color = mNumbersColor
-        paintMinMarker.color = mMinutesMarkersColor
-        paintHourMarker.color = mHourMarkersColor
-        paintHourArrow.color = mHoursArrowColor
-        paintMinArrow.color = mMinutesArrowColor
-        paintSecondArrow.color = mSecondsArrowColor
-        paintSecondArrowStart.color = mSecondsArrowColor
-        paintCenter.color = mCircleCenterColor
+        paintCircle.color = circleColor
+        paintCircleBackground.color = clockBackgroundColor
+        paintNumber.color = numbersColor
+        paintMinMarker.color = minutesMarkersColor
+        paintHourMarker.color = hourMarkersColor
+        paintHourArrow.color = hoursArrowColor
+        paintMinArrow.color = minutesArrowColor
+        paintSecondArrow.color = secondsArrowColor
+        paintSecondArrowStart.color = secondsArrowColor
+        paintCenter.color = circleCenterColor
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -176,15 +194,15 @@ class CustomClockView @JvmOverloads constructor (
 
     override fun onSaveInstanceState(): Parcelable {
         return Bundle().apply {
-            putInt("mBackgroundColor", mBackgroundColor)
-            putInt("mCircleColor", mCircleColor)
-            putInt("mHoursArrowColor", mHoursArrowColor)
-            putInt("mMinutesArrowColor", mMinutesArrowColor)
-            putInt("mSecondsArrowColor", mSecondsArrowColor)
-            putInt("mNumbersColor", mNumbersColor)
-            putInt("mHourMarkersColor", mHourMarkersColor)
-            putInt("mMinutesMarkersColor", mMinutesMarkersColor)
-            putInt("mCircleCenterColor", mCircleCenterColor)
+            putInt("mBackgroundColor", clockBackgroundColor)
+            putInt("mCircleColor", circleColor)
+            putInt("mHoursArrowColor", hoursArrowColor)
+            putInt("mMinutesArrowColor", minutesArrowColor)
+            putInt("mSecondsArrowColor", secondsArrowColor)
+            putInt("mNumbersColor", numbersColor)
+            putInt("mHourMarkersColor", hourMarkersColor)
+            putInt("mMinutesMarkersColor", minutesMarkersColor)
+            putInt("mCircleCenterColor", circleCenterColor)
             putParcelable("superState", super.onSaveInstanceState())
         }
     }
@@ -192,16 +210,16 @@ class CustomClockView @JvmOverloads constructor (
     override fun onRestoreInstanceState(state: Parcelable?) {
         var superState: Parcelable? = null
         if (state is Bundle) {
-            mBackgroundColor = state.getInt("mBackgroundColor")
-            mCircleColor = state.getInt("mCircleColor")
-            mHoursArrowColor = state.getInt("mHoursArrowColor")
-            mMinutesArrowColor = state.getInt("mMinutesArrowColor")
-            mSecondsArrowColor = state.getInt("mSecondsArrowColor")
-            mNumbersColor = state.getInt("mNumbersColor")
-            mHourMarkersColor = state.getInt("mHourMarkersColor")
-            mMinutesMarkersColor = state.getInt("mMinutesMarkersColor")
-            mCircleCenterColor = state.getInt("mCircleCenterColor")
-            mMinutesMarkersColor = state.getInt("mMinutesMarkersColor")
+            clockBackgroundColor = state.getInt("mBackgroundColor")
+            circleColor = state.getInt("mCircleColor")
+            hoursArrowColor = state.getInt("mHoursArrowColor")
+            minutesArrowColor = state.getInt("mMinutesArrowColor")
+            secondsArrowColor = state.getInt("mSecondsArrowColor")
+            numbersColor = state.getInt("mNumbersColor")
+            hourMarkersColor = state.getInt("mHourMarkersColor")
+            minutesMarkersColor = state.getInt("mMinutesMarkersColor")
+            circleCenterColor = state.getInt("mCircleCenterColor")
+            minutesMarkersColor = state.getInt("mMinutesMarkersColor")
             superState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 state.getParcelable("superState", Parcelable::class.java)
             } else {
@@ -316,77 +334,6 @@ class CustomClockView @JvmOverloads constructor (
             endCoordinates.y,
             paintSecondArrowStart
         )
-    }
-
-    fun setCircleColor(newColor: Int) {
-        mCircleColor = newColor
-        invalidate()
-    }
-
-    fun getCircleColor(): Int {
-        return mCircleColor
-    }
-    fun setClockBackgroundColor(newColor: Int) {
-        mBackgroundColor = newColor
-        invalidate()
-    }
-
-    fun getClockBackgroundColor(): Int {
-        return mBackgroundColor
-    }
-
-    fun setHoursArrowColor(newColor: Int) {
-        mHoursArrowColor = newColor
-        invalidate()
-    }
-
-    fun getHoursArrowColor(): Int {
-        return mHoursArrowColor
-    }
-
-    fun setMinutesArrowColor(newColor: Int) {
-        mMinutesArrowColor = newColor
-        invalidate()
-    }
-
-    fun getMinutesArrowColor(): Int {
-        return mMinutesArrowColor
-    }
-
-    fun setSecondsArrowColor(newColor: Int) {
-        mSecondsArrowColor = newColor
-        invalidate()
-    }
-
-    fun getSecondsArrowColor(): Int {
-        return mSecondsArrowColor
-    }
-
-    fun setNumbersColor(newColor: Int) {
-        mNumbersColor = newColor
-        invalidate()
-    }
-
-    fun getNumbersColor(): Int {
-        return mNumbersColor
-    }
-
-    fun setHourMarkersColor(newColor: Int) {
-        mHourMarkersColor = newColor
-        invalidate()
-    }
-
-    fun getHourMarkersColor(): Int {
-        return mHourMarkersColor
-    }
-
-    fun setMinutesMarkersColor(newColor: Int) {
-        mMinutesMarkersColor = newColor
-        invalidate()
-    }
-
-    fun getMinutesMarkersColor(): Int {
-        return mMinutesMarkersColor
     }
 }
 
