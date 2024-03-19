@@ -72,53 +72,53 @@ class CustomClockView @JvmOverloads constructor (
     }
 
     private val paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mCircleColor
+//        color = mCircleColor
         style = Paint.Style.STROKE
     }
 
     private val paintCircleBackground = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mBackgroundColor
+//        color = mBackgroundColor
         style = Paint.Style.FILL
     }
 
     private val paintNumber = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeWidth = NUMBER_STROKE_WIDTH.dpToPx()
-        color = mNumbersColor
+//        color = mNumbersColor
         style = Paint.Style.FILL
         typeface = ResourcesCompat.getFont(context, R.font.sansserifflf)
     }
 
     private val paintMinMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = mMinutesMarkersColor
+//        color = mMinutesMarkersColor
     }
 
     private val paintHourMarker = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = mHourMarkersColor
+//        color = mHourMarkersColor
     }
 
     private val paintHourArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mHoursArrowColor
+//        color = mHoursArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintMinArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mMinutesArrowColor
+//        color = mMinutesArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.SQUARE
     }
 
     private val paintSecondArrow = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mSecondsArrowColor
+//        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
 
     private val paintSecondArrowStart = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = mSecondsArrowColor
+//        color = mSecondsArrowColor
         style = Paint.Style.FILL
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
@@ -131,12 +131,23 @@ class CustomClockView @JvmOverloads constructor (
 
 
     private fun setPaintSettings() {
+        // set sizes
         paintNumber.textSize = mRadiusNum * NUMBERS_SIZE
         paintCircle.strokeWidth = mRadius * CIRCLE_STROKE_WIDTH
         paintHourArrow.strokeWidth = mRadiusNum * HOUR_ARROW_STROKE_WIDTH
         paintMinArrow.strokeWidth = mRadiusNum * MINUTE_ARROW_STROKE_WIDTH
         paintSecondArrow.strokeWidth = mRadiusNum * SECOND_ARROW_STROKE_WIDTH
         paintSecondArrowStart.strokeWidth = mRadiusNum * SECOND_ARROW_START_STROKE_WIDTH
+        // set colors
+        paintCircle.color = mCircleColor
+        paintCircleBackground.color = mBackgroundColor
+        paintNumber.color = mNumbersColor
+        paintMinMarker.color = mMinutesMarkersColor
+        paintHourMarker.color = mHourMarkersColor
+        paintHourArrow.color = mHoursArrowColor
+        paintMinArrow.color = mMinutesArrowColor
+        paintSecondArrow.color = mSecondsArrowColor
+        paintSecondArrowStart.color = mSecondsArrowColor
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -270,24 +281,26 @@ class CustomClockView @JvmOverloads constructor (
         )
     }
 
+    fun setCircleColor(newColor: Int) {
+        mCircleColor = newColor
+        invalidate()
+    }
+
+    fun getCircleColor(): Int {
+        return mCircleColor
+    }
     fun setClockBackgroundColor(newColor: Int) {
         mBackgroundColor = newColor
+        invalidate()
     }
 
     fun getClockBackgroundColor(): Int {
         return mBackgroundColor
     }
 
-    fun setCircleColor(newColor: Int) {
-        mCircleColor = newColor
-    }
-
-    fun getCircleColor(): Int {
-        return mCircleColor
-    }
-
     fun setHoursArrowColor(newColor: Int) {
         mHoursArrowColor = newColor
+        invalidate()
     }
 
     fun getHoursArrowColor(): Int {
@@ -296,6 +309,7 @@ class CustomClockView @JvmOverloads constructor (
 
     fun setMinutesArrowColor(newColor: Int) {
         mMinutesArrowColor = newColor
+        invalidate()
     }
 
     fun getMinutesArrowColor(): Int {
@@ -304,6 +318,7 @@ class CustomClockView @JvmOverloads constructor (
 
     fun setSecondsArrowColor(newColor: Int) {
         mSecondsArrowColor = newColor
+        invalidate()
     }
 
     fun getSecondsArrowColor(): Int {
@@ -312,6 +327,7 @@ class CustomClockView @JvmOverloads constructor (
 
     fun setNumbersColor(newColor: Int) {
         mNumbersColor = newColor
+        invalidate()
     }
 
     fun getNumbersColor(): Int {
@@ -320,6 +336,7 @@ class CustomClockView @JvmOverloads constructor (
 
     fun setHourMarkersColor(newColor: Int) {
         mHourMarkersColor = newColor
+        invalidate()
     }
 
     fun getHourMarkersColor(): Int {
@@ -328,6 +345,7 @@ class CustomClockView @JvmOverloads constructor (
 
     fun setMinutesMarkersColor(newColor: Int) {
         mMinutesMarkersColor = newColor
+        invalidate()
     }
 
     fun getMinutesMarkersColor(): Int {

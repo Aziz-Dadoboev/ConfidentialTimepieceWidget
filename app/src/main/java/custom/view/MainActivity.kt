@@ -1,6 +1,7 @@
 package custom.view
 
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,21 @@ class MainActivity : AppCompatActivity() {
         val dynamicClockView = addCustomClockViewToActivity()
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         val clockView = findViewById<CustomClockView>(R.id.clockView)
+
+        // using setters & getters
+        dynamicClockView.setCircleColor(clockView.getCircleColor())
+        dynamicClockView.setClockBackgroundColor(clockView.getClockBackgroundColor())
+        clockView.setClockBackgroundColor(Color.rgb(250, 247, 237))
+        dynamicClockView.setHoursArrowColor(clockView.getHoursArrowColor())
+        dynamicClockView.setMinutesArrowColor(clockView.getMinutesArrowColor())
+        val oldSecondsArrowColor = clockView.getSecondsArrowColor()
+        clockView.setSecondsArrowColor(Color.rgb(255, 0, 0))
+        dynamicClockView.setSecondsArrowColor(clockView.getSecondsArrowColor())
+        clockView.setSecondsArrowColor(oldSecondsArrowColor)
+        dynamicClockView.setNumbersColor(clockView.getNumbersColor())
+        dynamicClockView.setHourMarkersColor(clockView.getHourMarkersColor())
+        dynamicClockView.setMinutesMarkersColor(clockView.getMinutesMarkersColor())
+
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
             if (radio == findViewById<RadioButton>(R.id.dynamicButton)) {
